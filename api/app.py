@@ -2,15 +2,17 @@ import os
 import random
 import pandas as pd
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # Import CORS
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Define the data folder where CSVs are stored
 DATA_FOLDER = os.path.join(os.path.dirname(__file__), "data")
 
 # Define CSV files with correct paths
 tech_csv_files = {
-    "software+developer": os.path.join(DATA_FOLDER, "software_developer.csv"),
+    "software developer": os.path.join(DATA_FOLDER, "software_developer.csv"),
     "data analyst": os.path.join(DATA_FOLDER, "data_analyst.csv"),
     "aiml engineer": os.path.join(DATA_FOLDER, "ai_ml_engineer.csv"),
     "developer engineer": os.path.join(DATA_FOLDER, "developer_engineer.csv"),
@@ -38,11 +40,10 @@ def load_csv(file_name):
     else:
         raise FileNotFoundError(f"File {file_name} not found!")
 
-@app.route('/get-questions', methods=['GET', 'POST'])
+@app.route('/get-questions', methods=['GET'])
 def get_questions():
     try:
-        # Get role from query parameters
-        role = request.args.get("role", "").lower()
+        role = request.args.get('role', '').lower()  # Get role from query params
 
         if role not in tech_csv_files:
             return jsonify({"error": "Invalid role"}), 400
