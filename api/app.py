@@ -38,11 +38,11 @@ def load_csv(file_name):
     else:
         raise FileNotFoundError(f"File {file_name} not found!")
 
-@app.route('/get-questions', methods=['POST'])
+@app.route('/get-questions', methods=['GET', 'POST'])
 def get_questions():
     try:
-        data = request.json
-        role = data.get('role', '').lower()
+        # Get role from query parameters
+        role = request.args.get("role", "").lower()
 
         if role not in tech_csv_files:
             return jsonify({"error": "Invalid role"}), 400
