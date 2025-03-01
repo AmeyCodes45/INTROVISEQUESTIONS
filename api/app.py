@@ -47,11 +47,11 @@ def get_questions():
         if role not in tech_csv_files:
             return jsonify({"error": "Invalid role"}), 400
 
-        # Load technical questions
+        # Load and randomize technical questions
         tech_df = load_csv(tech_csv_files[role])
         tech_questions = tech_df.sample(n=random.randint(3, 5)).to_dict(orient='records')
 
-        # Load non-technical questions
+        # Load and randomize non-technical questions
         non_tech_questions = []
         selected_files = random.sample(non_tech_csv_files, random.randint(3, 5))
 
@@ -61,9 +61,8 @@ def get_questions():
                 question = df.sample(n=1).to_dict(orient='records')[0]
                 non_tech_questions.append(question)
 
-        # Combine and shuffle questions
+        # Ensure order: technical questions first, non-technical second
         combined_questions = tech_questions + non_tech_questions
-        random.shuffle(combined_questions)
 
         return jsonify(combined_questions), 200
 
