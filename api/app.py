@@ -10,7 +10,7 @@ DATA_FOLDER = os.path.join(os.path.dirname(__file__), "data")
 
 # Define CSV files with correct paths
 tech_csv_files = {
-    "software developer": os.path.join(DATA_FOLDER, "software_developer.csv"),
+    "software+developer": os.path.join(DATA_FOLDER, "software_developer.csv"),
     "data analyst": os.path.join(DATA_FOLDER, "data_analyst.csv"),
     "aiml engineer": os.path.join(DATA_FOLDER, "ai_ml_engineer.csv"),
     "developer engineer": os.path.join(DATA_FOLDER, "developer_engineer.csv"),
