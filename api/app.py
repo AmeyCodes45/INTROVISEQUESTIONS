@@ -12,7 +12,7 @@ DATA_FOLDER = os.path.join(os.path.dirname(__file__), "data")
 tech_csv_files = {
     "software developer": os.path.join(DATA_FOLDER, "software_developer.csv"),
     "data analyst": os.path.join(DATA_FOLDER, "data_analyst.csv"),
-    "aimlengineer": os.path.join(DATA_FOLDER, "ai_ml_engineer.csv"),
+    "aiml engineer": os.path.join(DATA_FOLDER, "ai_ml_engineer.csv"),
     "developer engineer": os.path.join(DATA_FOLDER, "developer_engineer.csv"),
     "cloud engineer": os.path.join(DATA_FOLDER, "cloud_engineer.csv")
 }
@@ -38,11 +38,11 @@ def load_csv(file_name):
     else:
         raise FileNotFoundError(f"File {file_name} not found!")
 
-@app.route('/get-questions', methods=['POST'])
+@app.route('/get-questions', methods=['GET', 'POST'])
 def get_questions():
     try:
-        data = request.json
-        role = data.get('role', '').lower()
+        # Get role from query parameters
+        role = request.args.get("role", "").lower()
 
         if role not in tech_csv_files:
             return jsonify({"error": "Invalid role"}), 400
